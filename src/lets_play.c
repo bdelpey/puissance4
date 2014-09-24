@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 08:25:13 by vbell             #+#    #+#             */
-/*   Updated: 2014/09/24 15:14:41 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 16:22:17 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		lets_play(char **map, int multi)
 			if ((nb = player_player_play(map, player, ia, who_play)))
 				return ;
 		if (multi == -1)
-			if ((nb = ia_ia_play(map, player, ia, who_play)))
+			if ((nb = ia_ia_play(map, ia, player, who_play)))
 				return ;
 		if (nb == -1)
 		{

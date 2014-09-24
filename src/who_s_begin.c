@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 09:50:03 by vbell             #+#    #+#             */
-/*   Updated: 2014/09/22 12:51:03 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 16:20:05 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	print_begin_b(int multi)
 	if (multi)
 	{
 		ft_putstr_fd("Player B starts.\nPlayer B plays with ", 1);
-		ft_putendl_fd("\033[1;33mO\033[0;m.", 1);
+		ft_putendl_fd("\033[1;35mO\033[0;m.", 1);
 		ft_putendl_fd("Player A plays with \033[1;35mX\033[0;m.", 1);
 	}
 	else
@@ -50,6 +50,12 @@ static void	print_begin_b(int multi)
 void		who_s_begin(char *ia, char *player, int multi)
 {
 	srand(time(NULL));
+	if (multi == -1)
+	{
+		*ia = PLAYER_A;
+		*player = PLAYER_B;
+		return ;
+	}
 	if (rand() % 2)
 	{
 		*player = PLAYER_A;
