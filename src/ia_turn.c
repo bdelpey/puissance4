@@ -6,7 +6,7 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 11:25:30 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 12:33:43 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 15:41:37 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int					starters_check(char **map, t_cnct *c, int col)
 	if ((c->NB = check_block(map, c->player, col)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-		write(1, "I BLOCK YOU DUMBASS\n", 20);
+//		write(1, "I BLOCK YOU DUMBASS\n", 20);
 		return (1);
 	}
 	if ((c->NB = check_advanced_fork(map, c, col)) != -1)

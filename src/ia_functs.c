@@ -6,7 +6,7 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 14:45:53 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 11:29:15 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 15:53:06 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int					check_block(char **map, char player, int col)
 
 int			rand_col(void)
 {
-	srand(time(NULL));
 	if (rand() % 2)
 		return (2);
 	else

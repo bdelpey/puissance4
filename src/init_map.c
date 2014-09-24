@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 07:54:58 by vbell             #+#    #+#             */
-/*   Updated: 2014/09/23 10:17:58 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 15:15:06 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	**fill_map(int ln, int col)
 
 static void	ft_error_syntax(void)
 {
-	ft_putstr_fd("Usage: ./puissance4 [--multi]", 2);
+	ft_putstr_fd("Usage: ./puissance4 [--multi][--ia]", 2);
 	ft_putendl_fd("\t--multi\t\t: allow the multiplayer mode", 2);
 }
 
@@ -60,6 +60,8 @@ char		**init_map(int ac, char **av, int *player)
 		{
 			if (!ft_strcmp(av[1], "--multi"))
 				(*player)++;
+			if (!ft_strcmp(av[1], "--ia"))
+				(*player)--;
 			else
 				ft_error_syntax();
 		}

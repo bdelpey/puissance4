@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 16:13:08 by vbell             #+#    #+#             */
-/*   Updated: 2014/03/09 18:02:07 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/24 15:56:24 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,3 +82,31 @@ int			player_player_play(char **map, char p1, char p2, char who_play)
 	}
 	return (nb);
 }
+
+int			ia_ia_play(char **map, char ia1, char ia2, char who_play)
+{
+	int		nb;
+
+	if (is_equality(map))
+		return (1);
+	if (who_play == ia1)
+	{
+		if ((nb = ia_turn(map, ia1, ia2)))
+		{
+			ft_putendl_fd("Game's Map:", 1);
+			ft_print_str_tab(map);
+			ft_putendl_fd("Ia1 win!", 1);
+		}
+	}
+	else
+	{
+		if ((nb = ia_turn(map, ia2, ia1)))
+		{
+			ft_putendl_fd("Game's Map:", 1);
+			ft_print_str_tab(map);
+			ft_putendl_fd("Ia2 win!", 1);
+		}
+	}
+	return (nb);
+}
+
