@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 07:26:08 by vbell             #+#    #+#             */
-/*   Updated: 2014/03/09 17:28:08 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/24 10:38:33 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void			init_max_len(int *nb_piece, int *ln, int *col, char **map);
 void			lets_play(char **map, int multi);
 int				check_block(char **map, char player, int col);
 int				check_ia_piece(char **map, char ia);
-int				check_easy_fork(char **map, char p, int col);
+int				check_advanced_fork(char **map, t_cnct *c, int col);
+int				vertical_fork(char **map, t_cnct *c);
+int				one_move_vertical_fork(char **map, t_cnct *c);
 int				default_place(char **map, char ia, int col);
 int				player_player_play(char **map, char p1, char p2, char player);
 int				player_ia_play(char **map, char p1, char p2, char player);

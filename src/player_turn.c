@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 09:51:15 by vbell             #+#    #+#             */
-/*   Updated: 2014/03/09 17:57:16 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/22 12:49:54 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	print_player(char player, int multi, int begin)
 	if (player == PLAYER_B)
 		write(1, "\033[1;31m", 7);
 	if (player == PLAYER_A)
-		write(1, "\033[1;33m", 7);
+		write(1, "\033[1;35m", 7);
 	write(1, &player, 1);
 	write(1, "\033[0;m", 5);
 	if (multi && player == PLAYER_B && begin)
@@ -60,7 +60,7 @@ static void	print_res(char multi, char player, int nb)
 	if (player == PLAYER_B)
 		write(1, "\033[1;31m", 7);
 	if (player == PLAYER_A)
-		write(1, "\033[1;33m", 7);
+		write(1, "\033[1;35m", 7);
 	ft_putstr_fd("-- ", 1);
 	write(1, "\033[0;m", 5);
 	if (multi)

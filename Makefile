@@ -6,7 +6,7 @@
 #    By: vbell <vbell@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/12/26 18:31:54 by vbell             #+#    #+#              #
-#    Updated: 2014/03/10 19:54:08 by bdelpey          ###   ########.fr        #
+#    Updated: 2014/09/23 09:57:57 by bdelpey          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -15,7 +15,7 @@ NAME = puissance4
 SRC = src/main.c src/init_map.c src/is_num.c src/check_info.c \
 	src/player_turn.c src/insert_piece.c src/who_s_begin.c src/ia_turn.c \
 	src/is_winner.c src/check_diag.c src/lets_play.c src/ia_functs.c \
-	src/versus.c
+	src/versus.c src/check_advanced_fork.c src/vertical_fork.c
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -L libft -lft
 INCLUDES = -I includes -I libft/includes

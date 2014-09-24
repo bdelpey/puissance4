@@ -6,12 +6,15 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 14:45:53 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/03/09 16:05:29 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/24 11:29:15 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 #include "puissance4.h"
+#include <time.h>
+#include <stdio.h>
 
 int					check_block(char **map, char player, int col)
 {
@@ -29,86 +32,51 @@ int					check_block(char **map, char player, int col)
 	return (-1);
 }
 
-int					check_ia_piece(char **map, char ia)
+int			rand_col(void)
 {
-	int				i;
-	int				j;
+	srand(time(NULL));
+	if (rand() % 2)
+		return (2);
+	else
+		return (4);
+}
 
-	i = 0;
-	while (map[i])
+int			chose_col(char **map, char ia)
+{
+	int		line[2];
+
+	line[0] = check_col_not_full(map, 4);
+	line[1] = check_col_not_full(map, 2);
+	if (line[0] == 5 && line[1] == 5)
+		return (rand_col());
+	else if (line[0] > 0 && line[0] < 5 && line[1] > 0 && line[1] < 5)
 	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == ia)
-				return (j);
-			j++;
-		}
-		i++;
+		if ((map[line[1] + 1][2] == ia && map[line[0] + 1][4] == ia)
+		 || (map[line[1] + 1][2] != ia && map[line[0] + 1][4] != ia))
+			return (rand_col());
+		if (map[line[1] + 1][2] == ia)
+			return (2);
+		else
+			return (4);
 	}
+	else if (line[0] == 5 && map[2][1] == '_')
+		return (2);
+	else if (line[1] == 5 && map[2][1] == '_')
+		return (4);
 	return (0);
-}
-
-static int			easy_fork_bis(int i, char **map, char p, int col)
-{
-	int				j;
-
-	j = 0;
-	while (j < col - 4)
-	{
-		if (map[i][j] == '_' && map[i][j + 1] == p && map[i][j + 2] == '_'
-				&& map[i][j + 3] == p && map[i][j + 4] == '_')
-			return (j + 2);
-		j++;
-	}
-	return (-1);
-}
-
-int					check_easy_fork(char **map, char p, int col)
-{
-	static int		i = 0;
-	int				j;
-
-	if (!i)
-		i = ft_len_str_tab(map) - 1;
-	j = 0;
-	while (j < col - 3)
-	{
-		if (map[i][j] == '_' && map[i][j + 1] == p && map[i][j + 2] == p
-				&& map[i][j + 3] == '_')
-		{
-			if (j && map[i][j - 1] == '_')
-				return (j);
-			else if (j + 4 < col && map[i][j + 4] == '_')
-				return (j + 3);
-		}
-		j++;
-	}
-	return (easy_fork_bis(i, map, p, col));
 }
 
 int					default_place(char **map, char ia, int col)
 {
-	static int		high = 0;
+	int				res;
 
-	if (!high)
-		high = ft_len_str_tab(map);
-	if (!check_ia_piece(map, ia))
+	if (map[0][col / 2] == '_')
 		return (col / 2);
-	if (map[high - 6][col / 2] == '_')
-		return (col / 2);
-	if (map[high - 6][col / 2 + 1] == '_')
+	if ((res = chose_col(map, ia)))
+		return (res);
+	if (map[1][col / 2 + 1] == '_')
 		return (col / 2 + 1);
-	if (map[high - 6][col / 2 - 1] == '_')
+	if (map[1][col / 2 - 1] == '_')
 		return (col / 2 - 1);
-	if (high >= 10)
-	{
-		if (map[high - 10][col / 2] == '_')
-			return (col / 2);
-		if (map[high - 10][col / 2 - 1] == '_')
-			return (col / 2 - 1);
-		if (map[high - 10][col / 2 + 1] == '_')
-			return (col / 2 + 1);
-	}
 	return (col / 2 - 2);
 }

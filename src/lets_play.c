@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 08:25:13 by vbell             #+#    #+#             */
-/*   Updated: 2014/03/09 16:13:29 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/23 09:45:23 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void		lets_play(char **map, int multi)
 
 	who_s_begin(&ia, &player, multi);
 	who_play = PLAYER_A;
-	ft_putendl_fd("Game's Map:", 1);
-	ft_print_str_tab(map);
 	while (01210)
 	{
 		if (!multi)

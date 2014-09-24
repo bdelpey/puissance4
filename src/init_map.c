@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 07:54:58 by vbell             #+#    #+#             */
-/*   Updated: 2014/03/09 16:40:09 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/23 10:17:58 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,25 @@ static char	**fill_map(int ln, int col)
 static void	ft_error_syntax(void)
 {
 	ft_putstr_fd("Usage: ./puissance4 [--multi]", 2);
-	ft_putendl_fd(" [nb_line > 5] [nb_col > 6]", 2);
 	ft_putendl_fd("\t--multi\t\t: allow the multiplayer mode", 2);
 }
 
 char		**init_map(int ac, char **av, int *player)
 {
 	char	**map;
-	int		ln;
-	int		col;
 
 	map = NULL;
-	if (ac >= 3)
+	if (ac <= 2)
 	{
-		if (!ft_strcmp(av[*player + 1], "--multi"))
-			(*player)++;
-		if (is_num(av[*player + 1]) && is_num(av[*player + 2]))
+		if (ac == 2)
 		{
-			ln = ft_atoi(av[*player + 1]);
-			col = ft_atoi(av[*player + 2]);
-			if (ln >= MIN_LINE && col >= MIN_COL)
-				if ((map = fill_map(ln, col)) != NULL)
-					return (map);
+			if (!ft_strcmp(av[1], "--multi"))
+				(*player)++;
+			else
+				ft_error_syntax();
 		}
+		if ((map = fill_map(6, 7)) != NULL)
+			return (map);
 	}
 	ft_error_syntax();
 	return (map);

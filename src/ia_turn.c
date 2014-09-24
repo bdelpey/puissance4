@@ -6,13 +6,14 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 11:25:30 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/03/09 17:37:08 by vbell            ###   ########.fr       */
+/*   Updated: 2014/09/24 12:33:43 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 #include "puissance4.h"
+#include <stdio.h>
 
 int					check_left_places(char **map, int col)
 {
@@ -35,22 +36,28 @@ int					starters_check(char **map, t_cnct *c, int col)
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
 		return (1);
 	}
-	else if ((c->NB = check_block(map, c->player, col)) != -1)
+	if ((c->NB = check_block(map, c->player, col)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
 		write(1, "I BLOCK YOU DUMBASS\n", 20);
 		return (1);
 	}
-	else if ((c->NB = check_easy_fork(map, c->player, col)) != -1)
+	if ((c->NB = check_advanced_fork(map, c, col)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-		write(1, "YOU THINK I'M THAT DUMB\n", 24);
+//		printf("## \033[1;31mADVANCED FORK.\033[1;0m ##\n");
 		return (1);
 	}
-	else if ((c->NB = check_easy_fork(map, c->ia, col)) != -1)
+	if ((c->NB = vertical_fork(map, c)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-		write(1, "TRICKED YOU\n", 12);
+//		printf("## \033[1;31mVERTICAL FORK.\033[1;0m ##\n");
+		return (1);
+	}
+	if ((c->NB = one_move_vertical_fork(map, c)) != -1)
+	{
+		c->LN = insert_piece(map, c->ia, c->NB, 1);
+//		printf("## \033[1;31m ONE MOVE VERTICAL FORK.\033[1;0m ##\n");
 		return (1);
 	}
 	return (0);
@@ -65,8 +72,8 @@ int					be_smart(char **map, t_cnct *c, int col)
 	while (c->LN == -1 && fcked < 2 * col)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 0);
-		if ((c->LN > 0 && !is_winner(map, c->player, c->NB, c->LN - 1))
-				|| c->LN == 0)
+		if ((c->LN > 0 && !is_winner(map, c->player, c->NB, c->LN - 1)
+			&& !is_winner(map, c->ia, c->NB, c->LN -1)) || c->LN == 0)
 		{
 			insert_piece(map, c->ia, c->NB, 1);
 			break ;
@@ -86,7 +93,7 @@ static void			print_res(char player, int nb)
 	if (player == PLAYER_B)
 		write(1, "\033[1;31m", 7);
 	if (player == PLAYER_A)
-		write(1, "\033[1;33m", 7);
+		write(1, "\033[1;35m", 7);
 	ft_putstr_fd("-- ", 1);
 	write(1, "\033[0;m", 5);
 	ft_putstr_fd("Ia Played in ", 1);
