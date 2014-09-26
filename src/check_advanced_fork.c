@@ -6,13 +6,12 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/09/22 12:44:39 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 12:32:51 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/26 09:59:05 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "puissance4.h"
-#include <stdio.h>
 
 int				double_win(char **map, char c, int col)
 {
@@ -28,10 +27,7 @@ int				double_win(char **map, char c, int col)
 		if (ln != -1 && is_winner(map, c, nb, ln))
 			count++;
 		if (count == 2)
-		{
-		//	printf("## \033[1;31mDOUBLE WIN pour %c.\033[1;0m ##\n", c);
 			return (1);
-		}
 		nb++;
 	}
 	return (0);
@@ -47,7 +43,6 @@ int				god_fork(char **map, t_cnct *c, int col)
 		ln = insert_piece(map, c->player, frk, 1);
 		if (ln > 0 && is_winner(map, c->ia, frk, ln - 1))
 		{
-		//	printf("## \033[1;31mIA GOD FORK.\033[1;0m ##\n");
 			map[ln][frk] = EMPTY_CAR;
 			return (1);
 		}
@@ -71,10 +66,7 @@ int				for_ia(char **map, t_cnct *c, int col)
 			{
 				map[ln][nb] = EMPTY_CAR;
 				if (ln == 0 || !is_winner(map, c->player, nb, ln - 1))
-				{
-				//	printf("## \033[1;31mIA SUCCESS.\033[1;0m ##\n");
 					return (nb);
-				}
 			}
 			map[ln][nb] = EMPTY_CAR;
 		}
@@ -93,7 +85,6 @@ int				god_fork_pl(char **map, t_cnct *c, int col)
 		ln = insert_piece(map, c->ia, frk, 1);
 		if (ln > 0 && is_winner(map, c->player, frk, ln - 1))
 		{
-		//	printf("## \033[1;31mIA GOD FORK PLAYER.\033[1;0m ##\n");
 			map[ln][frk] = EMPTY_CAR;
 			return (1);
 		}
@@ -117,10 +108,7 @@ int				for_player(char **map, t_cnct *c, int col)
 			{
 				map[ln][nb] = EMPTY_CAR;
 				if ((ln == 0 || !is_winner(map, c->player, nb, ln - 1)))
-				{
-				//	printf("## \033[1;31m won't get tricked.\033[1;0m ##\n");
 					return (nb);
-				}
 			}
 			map[ln][nb] = EMPTY_CAR;
 		}

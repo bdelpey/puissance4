@@ -6,7 +6,7 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 11:25:30 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 15:41:37 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/26 14:45:42 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,40 @@ int					starters_check(char **map, t_cnct *c, int col)
 	if ((c->NB = check_block(map, c->player, col)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-//		write(1, "I BLOCK YOU DUMBASS\n", 20);
 		return (1);
 	}
 	if ((c->NB = check_advanced_fork(map, c, col)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-//		printf("## \033[1;31mADVANCED FORK.\033[1;0m ##\n");
 		return (1);
 	}
 	if ((c->NB = vertical_fork(map, c)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-//		printf("## \033[1;31mVERTICAL FORK.\033[1;0m ##\n");
 		return (1);
 	}
 	if ((c->NB = one_move_vertical_fork(map, c)) != -1)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 1);
-//		printf("## \033[1;31m ONE MOVE VERTICAL FORK.\033[1;0m ##\n");
 		return (1);
 	}
 	return (0);
 }
 
-int					be_smart(char **map, t_cnct *c, int col)
+int					dont_be_dumb(char **map, t_cnct *c)
+{
+	c->LN = insert_piece(map, c->ia, c->NB, 1);
+	if (c->LN != -1 && (one_move(map, c, c->player) == -1) && (vertical_fork_core(map, c, c->player) == -1) && (for_player(map, c, 7) == -1))
+	{
+		map[c->LN][c->NB] = '_';
+		return (1);
+	}
+	if (c->LN != -1)
+		map[c->LN][c->NB] = '_';
+	return (0);
+}
+
+int					be_smart(char **map, t_cnct *c, int col, int fl)
 {
 	int				fcked;
 
@@ -72,11 +81,12 @@ int					be_smart(char **map, t_cnct *c, int col)
 	while (c->LN == -1 && fcked < 2 * col)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 0);
-		if ((c->LN > 0 && !is_winner(map, c->player, c->NB, c->LN - 1)
-			&& !is_winner(map, c->ia, c->NB, c->LN -1)) || c->LN == 0)
+		if ((c->LN != -1 && fl == 3 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c) && !is_winner(map, c->ia, c->NB, c->LN - 1)))) ||
+			(c->LN != -1 && fl == 2 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c)))) ||
+			(c->LN != -1 && fl == 1 && (!c->LN || !is_winner(map, c->player, c->NB, c->LN - 1))))
 		{
 			insert_piece(map, c->ia, c->NB, 1);
-			break ;
+			break;
 		}
 		else if (c->NB == col - 1)
 			c->NB = 0;
@@ -106,7 +116,9 @@ int					ia_turn(char **map, char ia, char player)
 	static int		col = 0;
 	t_cnct			c;
 	int				fcked;
+	int				fl;
 
+	fl = 3;
 	c.player = player;
 	c.ia = ia;
 	c.LN = -1;
@@ -115,7 +127,13 @@ int					ia_turn(char **map, char ia, char player)
 	if (starters_check(map, &c, col))
 		fcked = 0;
 	else
-		fcked = be_smart(map, &c, col);
+	{
+		while (fl)
+		{
+			fcked = be_smart(map, &c, col, fl);
+			--fl;
+		}
+	}
 	if (fcked == 2 * col)
 	{
 		c.NB = check_left_places(map, col);

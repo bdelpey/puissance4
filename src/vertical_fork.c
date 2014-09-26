@@ -6,13 +6,12 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/09/23 09:58:52 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 12:36:37 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/26 09:56:51 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "puissance4.h"
-#include <stdio.h>
 
 int				block_vertical_fork(char **map, char c, int i, int line, t_cnct *cc)
 {
@@ -60,12 +59,8 @@ int				vertical_fork_core(char **map, t_cnct *cc, char c)
 		{
 			if (map[line][col] == '_' && is_winner(map, c, col, line))
 			{
-//				printf("## \033[1;31m %c would win in %d %d .\033[1;0m ##\n", c, col, line);
 				if ((res = block_vertical_fork(map, c, col, line, cc)) > -1)
-				{
-//					printf("res : %d\n", res);
 					break;
-				}
 			}
 			col++;
 		}

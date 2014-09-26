@@ -6,7 +6,7 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 14:45:53 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/24 15:53:06 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/26 09:58:19 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 #include "puissance4.h"
 #include <time.h>
-#include <stdio.h>
 
 int					check_block(char **map, char player, int col)
 {

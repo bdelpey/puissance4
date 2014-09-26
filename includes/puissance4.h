@@ -6,7 +6,7 @@
 /*   By: vbell <vbell@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 07:26:08 by vbell             #+#    #+#             */
-/*   Updated: 2014/09/24 15:27:03 by bdelpey          ###   ########.fr       */
+/*   Updated: 2014/09/26 14:38:42 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,9 @@ int				default_place(char **map, char ia, int col);
 int				player_player_play(char **map, char p1, char p2, char player);
 int				player_ia_play(char **map, char p1, char p2, char player);
 int				ia_ia_play(char **map, char ia1, char ia2, char player);
+
+int				one_move(char **map, t_cnct *c, char p);
+int				vertical_fork_core(char **map, t_cnct *c, char p);
+int				for_player(char **map, t_cnct *c, int);
 
 #endif			/*!PUISSANCE4_H*/
