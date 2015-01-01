@@ -6,7 +6,7 @@
 /*   By: bdelpey <bdelpey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 11:25:30 by bdelpey           #+#    #+#             */
-/*   Updated: 2014/09/26 14:45:42 by bdelpey          ###   ########.fr       */
+/*   Updated: 2015/01/01 17:55:43 by bdelpey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int					dont_be_dumb(char **map, t_cnct *c)
 	return (0);
 }
 
-int					be_smart(char **map, t_cnct *c, int col, int fl)
+int					be_smart(char **map, t_cnct *c, int col, int *fl)
 {
 	int				fcked;
 
@@ -81,11 +81,12 @@ int					be_smart(char **map, t_cnct *c, int col, int fl)
 	while (c->LN == -1 && fcked < 2 * col)
 	{
 		c->LN = insert_piece(map, c->ia, c->NB, 0);
-		if ((c->LN != -1 && fl == 3 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c) && !is_winner(map, c->ia, c->NB, c->LN - 1)))) ||
-			(c->LN != -1 && fl == 2 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c)))) ||
-			(c->LN != -1 && fl == 1 && (!c->LN || !is_winner(map, c->player, c->NB, c->LN - 1))))
+		if ((c->LN != -1 && *fl == 3 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c) && !is_winner(map, c->ia, c->NB, c->LN - 1)))) ||
+			(c->LN != -1 && *fl == 2 && (!c->LN || (!is_winner(map, c->player, c->NB, c->LN - 1) && dont_be_dumb(map, c)))) ||
+			(c->LN != -1 && *fl == 1 && (!c->LN || !is_winner(map, c->player, c->NB, c->LN - 1))))
 		{
 			insert_piece(map, c->ia, c->NB, 1);
+			*fl = 0;
 			break;
 		}
 		else if (c->NB == col - 1)
@@ -130,8 +131,9 @@ int					ia_turn(char **map, char ia, char player)
 	{
 		while (fl)
 		{
-			fcked = be_smart(map, &c, col, fl);
-			--fl;
+			fcked = be_smart(map, &c, col, &fl);
+			if (fl)
+				--fl;
 		}
 	}
 	if (fcked == 2 * col)
